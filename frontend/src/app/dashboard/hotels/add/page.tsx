@@ -23,6 +23,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm , Controller} from "react-hook-form"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { toast } from "sonner"
 
 interface HotelFormInputs {
@@ -59,7 +60,7 @@ export default function AddHotelPage() {
     setError("")
 
     try {
-      const Rresponse = await axios.post("http://localhost:3000/posthotel-info", data, { withCredentials: true })
+      const Rresponse = await axios.post(`${API_BASE_URL}/posthotel-info`, data, { withCredentials: true })
     
       if (Rresponse.status === 201) {
         toast.success("Hotel added successfully");

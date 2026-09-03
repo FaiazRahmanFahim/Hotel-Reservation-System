@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Pencil, Trash2, Search } from "lucide-react"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -68,7 +69,7 @@ export default function HotelList() {
 
   const fetchHotels = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/posthotel-info", {
+      const response = await axios.get(`${API_BASE_URL}/posthotel-info`, {
         withCredentials: true
       });
       setHotels(response.data);
@@ -80,7 +81,7 @@ export default function HotelList() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this hotel?")) {
       try {
-        await axios.delete(`http://localhost:3000/posthotel-info/${id}`, {
+        await axios.delete(`${API_BASE_URL}/posthotel-info/${id}`, {
           withCredentials: true
         });
         fetchHotels();

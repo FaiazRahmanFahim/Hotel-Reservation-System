@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -31,7 +32,7 @@ export default function ResetPassword() {
     setIsLoading(true);
     try {
       await axios.post(
-        "http://localhost:3000/hoteladmin-login/reset-password",
+        `${API_BASE_URL}/hoteladmin-login/reset-password`,
         { 
           reset_token: data.reset_token,
           new_password: data.new_password 

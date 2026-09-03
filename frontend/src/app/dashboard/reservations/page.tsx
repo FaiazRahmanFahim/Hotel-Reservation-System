@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Printer } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { useEffect, useState } from "react"
 
 interface Reservation {
@@ -61,7 +62,7 @@ export default function ReservationsPage() {
 
   const fetchReservations = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/reservation", { withCredentials: true });
+      const response = await axios.get(`${API_BASE_URL}/reservation`, { withCredentials: true });
       setReservations(response.data);
     } catch (error) {
       console.error("Error fetching reservations:", error);

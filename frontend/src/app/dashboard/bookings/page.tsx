@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Printer } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { useEffect, useState } from "react"
 
 interface BookingHistory {
@@ -62,7 +63,7 @@ export default function BookingHistoryPage() {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/booking-history", {
+      const response = await axios.get(`${API_BASE_URL}/booking-history`, {
         withCredentials: true
       });
       setBookings(response.data);

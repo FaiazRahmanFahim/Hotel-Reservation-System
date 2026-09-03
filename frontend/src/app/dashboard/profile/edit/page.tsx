@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { toast } from "sonner"
 import { 
   ArrowLeft,
@@ -63,7 +64,7 @@ export default function EditProfilePage() {
 
   const fetchProfile = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:3000/admin-profile",
+      const response = await axios.get(`${API_BASE_URL}/admin-profile`,
         { withCredentials: true });
         
       if (response.data) {
@@ -114,7 +115,7 @@ export default function EditProfilePage() {
     const formData = new FormData();
     formData.append('profilePicture', selectedFile);
     try {
-      await axios.post(`http://localhost:3000/admin-profile/upload-picture`,
+      await axios.post(`${API_BASE_URL}/admin-profile/upload-picture`,
         formData,
         {withCredentials: true }
       );
@@ -135,7 +136,7 @@ export default function EditProfilePage() {
     setIsSaving(true);
     try {
       
-      await axios.put(`http://localhost:3000/admin-profile/${profile.adminID}`,
+      await axios.put(`${API_BASE_URL}/admin-profile/${profile.adminID}`,
         formData,
         { withCredentials: true }
       );

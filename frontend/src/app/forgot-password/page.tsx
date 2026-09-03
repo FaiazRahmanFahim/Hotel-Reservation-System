@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -29,7 +30,7 @@ export default function ForgotPassword() {
     setIsLoading(true);
     try {
       await axios.post(
-        "http://localhost:3000/hoteladmin-login/forgot-password",
+        `${API_BASE_URL}/hoteladmin-login/forgot-password`,
         { email: data.email },
         { withCredentials: true }
       );

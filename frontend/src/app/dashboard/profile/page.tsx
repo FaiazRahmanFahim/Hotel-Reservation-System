@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { toast } from "sonner"
 import { 
   Pencil, 
@@ -44,7 +45,7 @@ export default function ProfilePage() {
   const fetchProfile = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/admin-profile",
+        `${API_BASE_URL}/admin-profile`,
         { withCredentials: true }
       );
       

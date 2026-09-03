@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { 
   HiOutlineUsers, 
@@ -50,10 +51,10 @@ export default function DashboardPage() {
     const fetchAllStats = async () => {
       try {
         const [bookingResponse, reservationResponse] = await Promise.all([
-          axios.get("http://localhost:3000/booking-history/dashboard", {
+          axios.get(`${API_BASE_URL}/booking-history/dashboard`, {
             withCredentials: true
           }),
-          axios.get("http://localhost:3000/reservation/dashboard/stats", {
+          axios.get(`${API_BASE_URL}/reservation/dashboard/stats`, {
             withCredentials: true
           })
         ]);

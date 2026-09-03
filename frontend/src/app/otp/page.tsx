@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -31,7 +32,7 @@ export default function VerifyOTP() {
     try {
       // Verify the OTP
       await axios.post(
-        "http://localhost:3000/hoteladmin-login/verify-token",
+        `${API_BASE_URL}/hoteladmin-login/verify-token`,
         { verificationCode: data.reset_token },
         { withCredentials: true }
       );

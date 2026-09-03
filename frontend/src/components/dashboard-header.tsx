@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { toast } from "sonner"
 import { HiCheck, HiX } from 'react-icons/hi'
 
@@ -40,7 +41,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/notifications", {
+      const response = await axios.get(`${API_BASE_URL}/notifications`, {
         withCredentials: true
       });
       setNotifications(response.data);
@@ -52,7 +53,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
   const handleBookingAction = async (bookingId: number, action: 'accept' | 'reject') => {
     try {
-      await axios.patch(`http://localhost:3000/booking-history/${bookingId}/status`, {
+      await axios.patch(`${API_BASE_URL}/booking-history/${bookingId}/status`, {
         status: action === 'accept' ? 'Active' : 'Rejected'
       }, {
         withCredentials: true
@@ -69,7 +70,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
   const markAsRead = async (id: number) => {
     try {
-      await axios.patch(`http://localhost:3000/notification/${id}/read`, {}, {
+      await axios.patch(`${API_BASE_URL}/notification/${id}/read`, {}, {
         withCredentials: true
       });
       fetchNotifications();
@@ -80,7 +81,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
   const markAllAsRead = async () => {
     try {
-      await axios.post("http://localhost:3000/notification/mark-all-read", {}, {
+      await axios.post(`${API_BASE_URL}/notification/mark-all-read`, {}, {
         withCredentials: true
       });
       fetchNotifications();
@@ -97,7 +98,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/auth/logout", {}, { 
+      await axios.post(`${API_BASE_URL}/auth/logout`, {}, { 
         withCredentials: true 
       });
       toast.success("Logged out successfully");

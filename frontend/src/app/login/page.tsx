@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 
 interface LoginFormValues {
     username?: string;
@@ -26,7 +27,7 @@ export default function LoginPage() {
         setIsLoading(true)
         setError("")
         try {
-            const Rresponse = await axios.post("http://localhost:3000/auth/login", {
+            const Rresponse = await axios.post(`${API_BASE_URL}/auth/login`, {
                 username: data.username,
                 password: data.password
             }, { withCredentials: true });

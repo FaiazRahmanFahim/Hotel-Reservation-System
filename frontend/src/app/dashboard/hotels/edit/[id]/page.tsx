@@ -23,6 +23,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useForm, Controller } from "react-hook-form"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 
 interface HotelFormData {
   HotelName: string;
@@ -59,7 +60,7 @@ export default function EditHotelPage() {
   useEffect(() => {
     const fetchHotel = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/posthotel-info/${id}`, {
+        const response = await axios.get(`${API_BASE_URL}/posthotel-info/${id}`, {
           withCredentials: true
         });
         reset(response.data); // Pre-fill the form with existing data
@@ -81,7 +82,7 @@ export default function EditHotelPage() {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/posthotel-info/${id}`,
+        `${API_BASE_URL}/posthotel-info/${id}`,
         data,
         { withCredentials: true }
       )

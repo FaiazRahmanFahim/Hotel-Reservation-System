@@ -19,6 +19,7 @@ import { ModeToggle } from "./mode-toggle"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import axios from "axios"
+import { API_BASE_URL } from "@/lib/api"
 import { toast } from "sonner"
 
 const sidebarNavItems = [
@@ -74,7 +75,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
 
     const handleLogout = async () => {
       try {
-        await axios.post("http://localhost:3000/auth/logout", {}, 
+        await axios.post(`${API_BASE_URL}/auth/logout`, {}, 
           { withCredentials: true });
         toast.success("Logged out successfully");
         router.push("/login");
