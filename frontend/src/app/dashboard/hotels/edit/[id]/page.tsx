@@ -63,7 +63,7 @@ export default function EditHotelPage() {
           withCredentials: true
         });
         reset(response.data); // Pre-fill the form with existing data
-      } catch (error) {
+      } catch {
         setError('Failed to fetch hotel details');
       } finally {
         setIsFetching(false);
@@ -92,8 +92,12 @@ export default function EditHotelPage() {
       } else {
         setError("Failed to update hotel")
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to update hotel')
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Failed to update hotel')
+      } else {
+        setError('Failed to update hotel')
+      }
     } finally {
       setIsLoading(false)
     }

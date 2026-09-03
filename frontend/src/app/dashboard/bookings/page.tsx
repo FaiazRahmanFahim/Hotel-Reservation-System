@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Printer, X } from "lucide-react"
+import { Search, Printer } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import axios from "axios"
 import { useEffect, useState } from "react"

@@ -10,7 +10,6 @@ import axios from "axios"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
 
 // Match your DTO
 type ResetFormData = {
@@ -42,8 +41,12 @@ export default function ResetPassword() {
       
       toast.success("Password reset successfully");
       router.push('/login');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to reset password");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to reset password");
+      } else {
+        toast.error("Failed to reset password");
+      }
     } finally {
       setIsLoading(false);
     }

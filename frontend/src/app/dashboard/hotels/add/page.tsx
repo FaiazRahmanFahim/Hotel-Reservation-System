@@ -23,7 +23,22 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm , Controller} from "react-hook-form"
 import axios from "axios"
+import { toast } from "sonner"
 
+interface HotelFormInputs {
+  HotelName: string;
+  HotelSerialNo: string;
+  City: string;
+  ContactNumber: string;
+  NumberOfRoom: number;
+  Price: number;
+  roomType: string;
+  Address: string;
+  Country: string;
+  email: string;
+  WebSite?: string;
+  Description?: string;
+}
 
 export default function AddHotelPage() {
 
@@ -37,25 +52,29 @@ export default function AddHotelPage() {
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm();
+  } = useForm<HotelFormInputs>();
 
-  const onSubmitted = async (data: any) => {
+  const onSubmitted = async (data: HotelFormInputs) => {
     setIsLoading(true)
     setError("")
-    // double check type of input data before sending
 
     try {
-      const Rresponse = await axios.post("http://localhost:3000/posthotel-info",data, { withCredentials: true})
+      const Rresponse = await axios.post("http://localhost:3000/posthotel-info", data, { withCredentials: true })
     
       if (Rresponse.status === 201) {
+        toast.success("Hotel added successfully");
         reset()
         router.push('/dashboard/hotels')
       }
-      else{
-        alert("Something went wrong");
+      else {
+        setError("Something went wrong");
       }
-    } catch (err: any) {
-      setError('Failed to add hotel')
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Failed to add hotel');
+      } else {
+        setError('Failed to add hotel');
+      }
     } finally {
       setIsLoading(false)
     }
@@ -75,6 +94,11 @@ export default function AddHotelPage() {
         </div>
         
         <div className="flex-1 overflow-y-auto p-6">
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-md">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmitted)}>
           <Table>
             <TableBody>

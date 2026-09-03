@@ -79,7 +79,7 @@ export default function NotificationsPage() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center text-gray-500 py-4">
+                      <TableCell colSpan={3} className="text-center text-gray-500 py-4">
                         No notifications found
                       </TableCell>
                     </TableRow>

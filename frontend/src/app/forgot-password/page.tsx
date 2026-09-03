@@ -10,7 +10,6 @@ import axios from "axios"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
 
 type EmailFormData = {
   email: string;
@@ -37,8 +36,12 @@ export default function ForgotPassword() {
       
       toast.success("Reset code sent to your email");
       router.push('/reset-password');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to send reset code");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to send reset code");
+      } else {
+        toast.error("Failed to send reset code");
+      }
     } finally {
       setIsLoading(false);
     }

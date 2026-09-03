@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 import { toast } from "sonner"
 import { 
@@ -18,7 +18,7 @@ import {
   MapPin, 
   Calendar, 
   Building2, 
-  Globe,
+  Globe, 
   User 
 } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -41,11 +41,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<AdminProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const response = await axios.get(
         "http://localhost:3000/admin-profile",
@@ -55,8 +51,8 @@ export default function ProfilePage() {
       if (response.data) {
         setProfile(response.data);
       }
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
         toast.error("Please login to view your profile");
         router.push('/login');
       } else {
@@ -66,9 +62,13 @@ export default function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
 
-  const InfoItem = ({ icon: Icon, label, value }: { icon: any, label: string, value?: string }) => (
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  const InfoItem = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value?: string }) => (
     <div className="flex items-start space-x-3 p-4 rounded-lg bg-gray-50">
       <div className="mt-0.5">
         <Icon className="h-5 w-5 text-gray-500" />

@@ -65,7 +65,7 @@ const sidebarNavItems = [
  
 ]
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function DashboardSidebar({ className }: SidebarProps) {
   const pathname = usePathname()

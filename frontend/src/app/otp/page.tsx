@@ -30,17 +30,22 @@ export default function VerifyOTP() {
     setIsLoading(true);
     try {
       // Verify the OTP
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3000/hoteladmin-login/verify-token",
-        { verificationCode: data.reset_token },{withCredentials: true}
+        { verificationCode: data.reset_token },
+        { withCredentials: true }
       );
       
       toast.success("OTP verified successfully");
       // Store the token in sessionStorage for the next step
       sessionStorage.setItem('reset_token', data.reset_token);
       router.push('/reset-password'); // Redirect to password change page
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Invalid OTP");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Invalid OTP");
+      } else {
+        toast.error("Invalid OTP");
+      }
     } finally {
       setIsLoading(false);
     }

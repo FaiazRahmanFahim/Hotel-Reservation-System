@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 import { toast } from "sonner"
 import { 
@@ -16,7 +16,6 @@ import {
   Loader2, 
   Upload,
   User,
-  Mail,
   Phone,
   MapPin,
   Building2,
@@ -48,11 +47,21 @@ export default function EditProfilePage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+  const handleError = useCallback((error: unknown) => {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        toast.error("Please login to continue");
+        router.push('/login');
+      } else {
+        toast.error(error.response?.data?.message || "An error occurred");
+        console.error("Error:", error);
+      }
+    } else {
+      toast.error("An unexpected error occurred");
+    }
+  }, [router]);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:3000/admin-profile",
         { withCredentials: true });
@@ -64,22 +73,16 @@ export default function EditProfilePage() {
           setPreviewUrl(response.data.profilePicture);
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       handleError(error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [handleError]);
 
-  const handleError = (error: any) => {
-    if (error.response?.status === 401) {
-      toast.error("Please login to continue");
-      router.push('/login');
-    } else {
-      toast.error(error.response?.data?.message || "An error occurred");
-      console.error("Error:", error);
-    }
-  };
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

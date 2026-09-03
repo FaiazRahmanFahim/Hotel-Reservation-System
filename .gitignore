@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# NestJS build output
+backend/dist/
+backend/build/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Environment variables & secrets
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+backend/.env.local
+frontend/.env.local
+!.env.example
+!**/.env.example
+
+# IDEs & Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vs/
+**/.vs/
+backend/src/.vs/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+next-env.d.ts
+
+# Uploads & Temp files
+backend/uploads/*
+!backend/uploads/.gitkeep
+.temp
+.tmp

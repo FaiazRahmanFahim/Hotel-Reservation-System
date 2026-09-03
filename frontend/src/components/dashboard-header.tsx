@@ -31,7 +31,7 @@ interface Notification {
   };
 }
 
-interface DashboardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+type DashboardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function DashboardHeader({ className }: DashboardHeaderProps) {
   const router = useRouter();

@@ -9,36 +9,37 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import axios from "axios"
 
+interface LoginFormValues {
+    username?: string;
+    password?: string;
+}
+
 export default function LoginPage() {
 
-    const {register,handleSubmit,formState: {errors}} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm<LoginFormValues>();
 
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
 
-
-
-    const formSubmitted = async (data: any) => {
+    const formSubmitted = async (data: LoginFormValues) => {
         setIsLoading(true)
         setError("")
         try {
             const Rresponse = await axios.post("http://localhost:3000/auth/login", {
-                
                 username: data.username,
                 password: data.password
-            },{withCredentials: true}
-            );
+            }, { withCredentials: true });
 
             if (Rresponse.status === 200) {
                 router.push("/dashboard");
             } else {
-                setError("Invalid username or password")
+                setError("Invalid username or password");
             }
-        } catch (error) {
-            setError("Invalid username or password")
+        } catch {
+            setError("Invalid username or password");
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
@@ -60,6 +61,11 @@ export default function LoginPage() {
                     Thank you for getting back, please sign in to your account.
                 </p>
                 </div>
+                {error && (
+                    <div className="p-3 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-lg text-center font-medium">
+                        {error}
+                    </div>
+                )}
                 <form onSubmit={handleSubmit(formSubmitted)}>
                 <div className="space-y-4">
                     <div className="space-y-2">
