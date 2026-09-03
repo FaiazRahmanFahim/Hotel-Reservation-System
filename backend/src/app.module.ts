@@ -23,16 +23,26 @@ import { Notification } from './notification/Entities/notification.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 1111,
-      username: 'postgres',
-      password: '5555',
-      database: 'TPABP',
-      entities: [HALogIn, PostHotelInfo, AdminProfile, BookingHistory, ReservationDetails, Customer, Notification], //[__dirname + '/**/*.entity{.ts,.js}']
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(
+      process.env.DATABASE_URL
+        ? {
+            type: 'postgres',
+            url: process.env.DATABASE_URL,
+            ssl: { rejectUnauthorized: false },
+            entities: [HALogIn, PostHotelInfo, AdminProfile, BookingHistory, ReservationDetails, Customer, Notification],
+            synchronize: true,
+          }
+        : {
+            type: 'postgres',
+            host: process.env.DB_HOST || 'localhost',
+            port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 1111,
+            username: process.env.DB_USERNAME || 'postgres',
+            password: process.env.DB_PASSWORD || '5555',
+            database: process.env.DB_NAME || 'TPABP',
+            entities: [HALogIn, PostHotelInfo, AdminProfile, BookingHistory, ReservationDetails, Customer, Notification],
+            synchronize: true,
+          },
+    ),
 
     MailerModule.forRoot({
       transport: {
