@@ -1,6 +1,6 @@
 
 import { BookingHistory } from "src/booking-history/Entities/bookinghistory.entity";
-import { Customer } from "src/customer/entities/customer.entity";
+import { Customer } from "src/customer/Entities/customer.entity";
 import { HALogIn } from "src/hoteladmin-login/Entities/login.entity";
 import { ReservationDetails } from "src/reservation-details/Entities/reservationdetails.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";

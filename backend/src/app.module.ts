@@ -15,7 +15,7 @@ import { ReservationModule } from './reservation-details/reservation.module';
 import { BookingHistoryModule } from './booking-history/bookinghistory.module';
 import { CustomerModule } from './customer/customer.module';
 import { ReservationDetails } from './reservation-details/Entities/reservationdetails.entity';
-import { Customer } from './customer/entities/customer.entity';
+import { Customer } from './customer/Entities/customer.entity';
 import { BookingHistory } from './booking-history/Entities/bookinghistory.entity';
 import { NotificationModule } from './notification/notification.module';
 import { Notification } from './notification/Entities/notification.entity';

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { PostHotelInfo } from 'src/posthotel_info/Entities/posthotel.entity';
-import { Customer } from 'src/customer/entities/customer.entity';
+import { Customer } from 'src/customer/Entities/customer.entity';
 import { BookingStatus, PaymentStatus } from '../interfaces/booking-status.interface';
 
 @Entity('BookingHistory')
